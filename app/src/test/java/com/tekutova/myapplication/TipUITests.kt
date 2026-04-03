@@ -1,5 +1,8 @@
 package com.tekutova.myapplication
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -18,21 +21,21 @@ class TipUITests {
     fun calculate_20_percent_tip() {
         composeTestRule.setContent {
             Tip_Time_ThemeTheme {
-                TipTimeLayout()
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    TipTimeLayout()
+                }
             }
         }
 
-        composeTestRule
-            .onNodeWithText("Bill Amount")
+        composeTestRule.onNodeWithText("Bill Amount")
             .performTextInput("10")
 
-        composeTestRule
-            .onNodeWithText("Tip Percentage")
+        composeTestRule.onNodeWithText("Tip Percentage")
             .performTextInput("20")
 
-        val expectedTip = NumberFormat.getCurrencyInstance().format(2.0)
-        composeTestRule
-            .onNodeWithText("Tip Amount: $expectedTip")
-            .assertExists()
+        val expectedTip = NumberFormat.getCurrencyInstance().format(2)
+        composeTestRule.onNodeWithText("Tip Amount: $expectedTip").assertExists(
+            "No node with this text was found."
+        )
     }
 }
